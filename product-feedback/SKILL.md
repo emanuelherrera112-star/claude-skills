@@ -73,7 +73,7 @@ Never fabricate a title.
 ## Template — Mode A (client-originated)
 
 ```
-Hi team! Sharing some product feedback from {Name}{, {Role}}{ at {Company}} ({email}).
+Hi team! Sharing some product feedback from {Name}{, {Role}}{ at {Company}} (<mailto:{email}|{email}>).
 {Optional 1-sentence customer context — only if non-obvious}
 
 *1. {Bold title — the gap in one phrase}*
@@ -173,6 +173,12 @@ Field rules:
 - Why-it-matters always connects to business impact (other affected customers, retention risk, scalability, competitive gap)
 - Workaround field is honest — "None." is a complete answer
 - Proposed solution should be modest — describe the shape of the fix, not a full spec
+
+## Slack formatting gotchas
+
+- *Emails inside parentheses break auto-link rendering* — Slack auto-links the email and traps the closing paren in the link. ALWAYS wrap emails in explicit Slack mailto syntax: `<mailto:email@domain.com|email@domain.com>` — renders as a clean clickable email with the paren preserved outside.
+- *No `slack_update_message` tool* — once a message is sent, it cannot be edited via MCP. The fix has to happen manually in Slack, or by deleting + reposting. Get formatting right the first time.
+- *Single asterisks for bold* (`*bold*`), single underscores for italic (`_italic_`). Slack uses non-standard markdown.
 
 ## Examples of good posts (from channel)
 
