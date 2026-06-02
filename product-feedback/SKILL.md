@@ -61,12 +61,14 @@ When in doubt, ask the CSM. Do not invent a customer.
 
 ## Title lookup
 
-When the email is provided in Mode A, attempt to find the contact's title:
+When the email is provided in Mode A, attempt to find the contact's title. *Look up ALL named contacts in the post*, not just the primary — co-attendees mentioned in the body get titles too if available.
 
-1. Search HubSpot contacts by email using `mcp__claude_ai_HubSpot__search_crm_objects` with `objectType: contacts` and a filter on `email`.
-2. If found and `jobtitle` is populated, use it.
-3. If contact not found, or `jobtitle` empty, *leave the title out of the post*. Do not guess.
-4. Optionally, surface this to the CSM in the draft preview: "Title not found in HubSpot — drop one in or leave empty?"
+Lookup strategy (in order):
+
+1. *Search by email* — `mcp__claude_ai_HubSpot__search_crm_objects` with `objectType: contacts`, query=email. If `jobtitle` is populated, use it.
+2. *Search by name + company* — if the email search returns the contact with no jobtitle, search by `firstname lastname` plus the company domain to catch any duplicate record that might have the title.
+3. *Search by domain to understand org context* — if still empty, search `email CONTAINS_TOKEN '<domain>' AND jobtitle HAS_PROPERTY` to surface colleagues' titles. Use this only to confirm the team/department the contact is on; do NOT borrow another colleague's title as theirs.
+4. *Final fallback:* leave the title out of the post. Do not guess. Optionally surface to CSM: "Title not found in HubSpot — drop one in or leave empty?"
 
 Never fabricate a title.
 
@@ -179,6 +181,25 @@ Field rules:
 - *Emails inside parentheses break auto-link rendering* — Slack auto-links the email and traps the closing paren in the link. ALWAYS wrap emails in explicit Slack mailto syntax: `<mailto:email@domain.com|email@domain.com>` — renders as a clean clickable email with the paren preserved outside.
 - *No `slack_update_message` tool* — once a message is sent, it cannot be edited via MCP. The fix has to happen manually in Slack, or by deleting + reposting. Get formatting right the first time.
 - *Single asterisks for bold* (`*bold*`), single underscores for italic (`_italic_`). Slack uses non-standard markdown.
+
+## Draft preview vs. Slack post — two different renderings
+
+The CSM sees the draft preview in chat *before* approving. The explicit mailto syntax `<mailto:email|email>` is correct for Slack but looks like the email is duplicated when displayed as plain text. Two-format rule:
+
+- *In the CSM preview (chat):* render emails as just `email@domain.com` inside parentheses — clean and readable. Note at the bottom that the actual post will use mailto wrapping.
+- *In the actual Slack post:* use the explicit `<mailto:email|email>` syntax so it renders clickable and clean in Slack.
+
+Always show the preview the way it will *render* in Slack, not the raw markdown. If a Slack-specific syntax (mailto, channel mentions, user IDs) would look like duplication or garbled in plain text, hide that from the preview and only apply it at send time.
+
+## Pre-send checks (validate before posting)
+
+Before calling `slack_send_message`, scan the final string for:
+- *Duplicated email rendering* — `email@domain.com email@domain.com` patterns (sign of broken mailto syntax)
+- *Visible raw mailto links* — `mailto:email@domain.com` showing as text instead of being a link
+- *Trailing parens stuck to auto-links* — verify paren placement around `<mailto:...>` blocks
+- *Missing title where one was found in HubSpot* — if you looked up a title and got one, make sure it's in the final draft
+
+Catch these in your own output before sending. The skill has no edit-after-send fallback.
 
 ## Examples of good posts (from channel)
 
