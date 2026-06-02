@@ -75,16 +75,16 @@ Never fabricate a title.
 ## Template — Mode A (client-originated)
 
 ```
-Hi team! Sharing some product feedback from {Name}{, {Role}}{ at {Company}} (<mailto:{email}|{email}>).
+{Rotated opener — see "Opener variations" below} {Name}{, {Role}}{ at {Company}} (<mailto:{email}|{email}>).
 {Optional 1-sentence customer context — only if non-obvious}
 
-*1. {Bold title — the gap in one phrase}*
-*What they experienced:* {2–3 sentences. Include verbatim quote in _italics_ when available.}
-*Why it matters:* {2–3 sentences. Business impact, who else is affected.}
-*Current workaround:* {What they do today. "None." if none.}
-*Proposed solution:* {Logical solution from convo context, CSM input, or client suggestion. If multiple sources, label which (e.g., "Client's ask:" / "CSM thinking:").}
+**1. {Bold title — the gap in one phrase}**
+**What they experienced:** {2–3 sentences. Include verbatim quote in _italics_ when available.}
+**Why it matters:** {2–3 sentences. Business impact, who else is affected.}
+**Current workaround:** {What they do today. "None." if none.}
+**Proposed solution:** {Logical solution from convo context, CSM input, or client suggestion. If multiple sources, label which (e.g., "Client's ask:" / "CSM thinking:").}
 
-*2. {Next item, same structure}*
+**2. {Next item, same structure}**
 ```
 
 Field rules:
@@ -98,9 +98,9 @@ Field rules:
 ```
 {Direct one-line setup with the gap or use case}
 
-*Gap / opportunity:* {what's missing or what could be unlocked}
-*Why it matters:* {business impact, use case context, who else hits this}
-*Proposed solution:* {CSM's idea or logical next step}
+**Gap / opportunity:** {what's missing or what could be unlocked}
+**Why it matters:** {business impact, use case context, who else hits this}
+**Proposed solution:** {CSM's idea or logical next step}
 ```
 
 Field rules:
@@ -203,9 +203,11 @@ Skip the customer-attribution opener. Lead with the gap or use case directly. Ex
 
 ## Slack formatting gotchas
 
+- *Bold = double asterisks* `**bold**`. Single asterisks `*text*` render as *italic* in Archive's Slack workspace (CommonMark parsing). Verified 2026-06-02 via test in #emanuel-lab.
+- *Italic* = single asterisks `*italic*` OR single underscores `_italic_`. Both work.
+- *Headers* = `# Header text` renders as a larger styled header in Slack. Use sparingly — channel pattern uses bold not headers.
 - *Emails inside parentheses break auto-link rendering* — Slack auto-links the email and traps the closing paren in the link. ALWAYS wrap emails in explicit Slack mailto syntax: `<mailto:email@domain.com|email@domain.com>` — renders as a clean clickable email with the paren preserved outside.
 - *No `slack_update_message` tool* — once a message is sent, it cannot be edited via MCP. The fix has to happen manually in Slack, or by deleting + reposting. Get formatting right the first time.
-- *Single asterisks for bold* (`*bold*`), single underscores for italic (`_italic_`). Slack uses non-standard markdown.
 
 ## Draft preview vs. Slack post — two different renderings
 
