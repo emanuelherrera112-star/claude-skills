@@ -131,7 +131,18 @@ Field rules:
 
 3. *Detect mode.* Mode A vs Mode B.
 
-4. *Extract feedback items.* Identify each distinct product gap. Do not pad. If the input describes one gap, post one item. Ground the extraction in the actual email/transcript content — not in the CSM's framing hint. If the CSM said "feedback on X" but the email is about Y, write the post about Y and flag the mismatch back to the CSM.
+4. *Extract feedback items.* Identify each distinct product gap. Do not pad. If the input describes one gap, post one item.
+
+   *CRITICAL — read the full thread, not just the first message.* The strongest feedback signal usually lives in the back-and-forth, not the initial customer ask. The initial ask is often something Archive already supports (a training/discoverability issue, NOT feedback). The real gap usually surfaces in:
+   - The customer's follow-up messages after the CSM's initial response
+   - The CSM's own commitments in the thread ("I'll file a feature request for X", "I'll flag this to product", "we don't support X today but I'll surface it") — these are gold-standard markers
+   - Side topics raised by the customer that the CSM acknowledged as gaps
+
+   For Grain meetings: fetch the full transcript, not just notes. Scan for moments where the CSM says "that's not something we support" or "I'll bring that back to the team" — those are the feedback candidates.
+
+   *Filter out asks with existing solutions.* Before extracting any item, ask: "Is this solvable in Archive today?" If yes, do not file it as feedback. Either (a) move to the deeper gap that came up later in the convo, or (b) skip the post entirely if everything's solvable.
+
+   *Trust the CSM's topic hint.* If they say "feedback on X" but X doesn't appear in the first message, search the rest of the thread before drafting. Their hint is signal, not noise.
 
 5. *Fill required fields* for Mode A. Look up title in HubSpot if email is available. Confirm with CSM if email is missing.
 
@@ -181,6 +192,8 @@ Field rules:
 - *HubSpot title lookup fails* → leave title blank, optionally surface to CSM
 - *Superhuman link resolution returns ambiguous / old / wrong-sender content* → stop, surface what was resolved, ask CSM to either confirm or paste the email body directly. Do NOT extract feedback from a resolved source the CSM hasn't confirmed.
 - *CSM's framing hint doesn't match resolved content* (e.g., they said "feedback on X" but the resolved email is about Y) → flag the mismatch explicitly, ask which is correct.
+- *Initial message is about a solvable-today ask, but CSM hinted at a different topic* → DO NOT draft on the initial message. Read the rest of the thread (or ask CSM to share the follow-up messages) where the real gap surfaced. Look for CSM commitments like "I'll file a feature request for X" — that's almost certainly the actual feedback to file.
+- *Customer ask is fully solvable in Archive today and no deeper gap surfaced* → do not file. Tell the CSM the request is already supported and skip the post.
 
 ## What this skill replaces
 
