@@ -118,13 +118,30 @@ Field rules:
 ## Workflow
 
 1. *Read all inputs.* Fetch Grain transcripts/notes if a share URL is provided. Fetch Superhuman threads if a link is provided. Read email screenshots directly. Pull Slack threads if a URL is provided.
-2. *Detect mode.* Mode A vs Mode B.
-3. *Extract feedback items.* Identify each distinct product gap. Do not pad. If the input describes one gap, post one item.
-4. *Fill required fields* for Mode A. Look up title in HubSpot if email is available. Confirm with CSM if email is missing.
-5. *Apply the template.* Use *italics* for verbatim customer quotes. Use *bold* for section labels.
-6. *Show draft inline.* Render the full post the way it will appear in Slack.
-7. *Wait for explicit approval.* "Looks good", "post it", "send it", "go" — then post via `slack_send_message`. Anything ambiguous → keep as a draft via `slack_send_message_draft`.
-8. *Confirm the post.* Return the Slack message link.
+
+2. *VERIFY the resolved source before extracting anything.* Before drafting, surface to the CSM a one-line confirmation of what got resolved: sender name + email + date + subject (for emails), or meeting title + date + attendees (for Grain). Wait for confirmation if any of these red flags hit:
+   - Resolved email is more than 60 days old
+   - Sender domain looks like a notification system (no-reply@, notifications@, featureos.app, hubspot.com bots, etc.)
+   - Resolved content does not obviously match the topic / customer the CSM described in their hint
+   - Multiple matching threads exist and the tool guessed which one to return
+
+   Confirmation prompt should look like: "Resolved: {sender} ({email}) on {date} — subject '{subject}'. Is this the right email? If not, paste the email body directly and I'll work from that."
+
+   *Never extract feedback from a resolved source the CSM hasn't confirmed.* This is the most important guardrail in the skill.
+
+3. *Detect mode.* Mode A vs Mode B.
+
+4. *Extract feedback items.* Identify each distinct product gap. Do not pad. If the input describes one gap, post one item. Ground the extraction in the actual email/transcript content — not in the CSM's framing hint. If the CSM said "feedback on X" but the email is about Y, write the post about Y and flag the mismatch back to the CSM.
+
+5. *Fill required fields* for Mode A. Look up title in HubSpot if email is available. Confirm with CSM if email is missing.
+
+6. *Apply the template.* Use *italics* for verbatim customer quotes. Use *bold* for section labels.
+
+7. *Show draft inline.* Render the full post the way it will appear in Slack.
+
+8. *Wait for explicit approval.* "Looks good", "post it", "send it", "go" — then post via `slack_send_message`. Anything ambiguous → keep as a draft via `slack_send_message_draft`.
+
+9. *Confirm the post.* Return the Slack message link.
 
 ## Inputs the skill accepts
 
@@ -162,6 +179,8 @@ Field rules:
 - *Input is too vague to extract a gap* → ask CSM to clarify the feedback signal before drafting
 - *Grain link returns no notes* → fall back to transcript, summarize relevant section
 - *HubSpot title lookup fails* → leave title blank, optionally surface to CSM
+- *Superhuman link resolution returns ambiguous / old / wrong-sender content* → stop, surface what was resolved, ask CSM to either confirm or paste the email body directly. Do NOT extract feedback from a resolved source the CSM hasn't confirmed.
+- *CSM's framing hint doesn't match resolved content* (e.g., they said "feedback on X" but the resolved email is about Y) → flag the mismatch explicitly, ask which is correct.
 
 ## What this skill replaces
 
