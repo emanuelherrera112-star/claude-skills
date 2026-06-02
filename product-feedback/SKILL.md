@@ -159,7 +159,7 @@ Field rules:
 | Input | Handling |
 |---|---|
 | Grain share URL | Extract meeting_id from URL, call `mcp__claude_ai_Grain__fetch_meeting_notes` (preferred) or `fetch_meeting_transcript` if notes are sparse |
-| Superhuman link | Resolve via `mcp__claude_ai_Superhuman__query_email_and_calendar` to find the thread, then `get_thread` for full content |
+| Superhuman link | If the link is the opaque tracking form (`links.superhuman.com/teams/.../l/cont_XXX`), do NOT use `query_email_and_calendar` to dereference it — that returns unreliable / wrong-thread results. Instead, triangulate: ask the CSM for the customer's email + subject keyword, use `list_threads` with `from=[customer_email]`, `subject_contains=...`, `start_date=...` to find the thread, then `get_thread` on the resulting `thread_id` to load all messages. If the link is a direct `app.superhuman.com/...` URL with a thread_id embedded, pass that to `get_thread` directly. |
 | Email screenshot | Read directly as an image, transcribe relevant content + extract sender details |
 | Slack thread URL | Parse channel ID + message ts from URL, call `mcp__claude_ai_Slack__slack_read_thread` |
 | Raw text | Use as-is |
