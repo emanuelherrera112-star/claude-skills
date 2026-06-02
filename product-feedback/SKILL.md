@@ -169,12 +169,37 @@ Field rules:
 
 ## Voice rules (channel native style)
 
-- "Sharing some product feedback from..." opener (Mode A)
+- *Vary the opener* — don't use the same greeting every time. Rotate through natural variations to keep the channel feeling human, not bot-templated. Pick one per post, ideally not repeating the one used in your most recent post.
 - Direct, professional, conversational. Not corporate-stiff.
 - Customer quotes in italics, framed by "_As they put it:_ ..." or just "_..._"
 - Why-it-matters always connects to business impact (other affected customers, retention risk, scalability, competitive gap)
 - Workaround field is honest — "None." is a complete answer
 - Proposed solution should be modest — describe the shape of the fix, not a full spec
+
+### Opener variations (Mode A — rotate)
+
+Pick one per post. All work; the variation is what matters:
+
+- `Hi team! Sharing some product feedback from {Name}...`
+- `Hey team — sharing some feedback from {Name}...`
+- `Hi everyone, sharing some product feedback from {Name}...`
+- `Team, sharing some feedback from {Name}...`
+- `Posting some feedback from {Name}...`
+- `Sharing feedback from {Name}...`
+- `Hey team, dropping some feedback from {Name}...`
+- `Quick product feedback from {Name}...`
+- `Heads up team — feedback from {Name}...`
+- `Hi team, surfacing some feedback from {Name}...`
+
+### Opener variations (Mode B — internal-originated)
+
+Skip the customer-attribution opener. Lead with the gap or use case directly. Examples from the channel:
+
+- `Interesting use case unlocked for {Brand}...` (Rumi pattern)
+- `{Person/team} flagged that...` (referential)
+- `Quick one for {team}...` (direct)
+- `Wanted to surface...` (soft open)
+- Or just dive straight into the gap with no opener at all (Paul / Ethan M pattern)
 
 ## Slack formatting gotchas
 
